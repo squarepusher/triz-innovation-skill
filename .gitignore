@@ -20,3 +20,6 @@ ship-app.cmd
 # python bytecode
 __pycache__/
 *.pyc
+
+# copyrighted source material — never publish
+Books/
