@@ -13,3 +13,10 @@ ship-app.cmd
 # secrets live in their tools (fcc admin UI / codex login), never the repo
 .env
 .env.local
+
+# ship-app persistent memory
+.ship-app.json
+
+# python bytecode
+__pycache__/
+*.pyc
