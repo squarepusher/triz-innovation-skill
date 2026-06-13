@@ -156,3 +156,12 @@ don't run them by default.
 Persist the analysis as a reusable case file:
 `python .claude/skills/triz-innovation/scripts/triz_case_template.py "Short problem title"`
 creates a pre-filled markdown file in `cases/`. Fill it as you run the pipeline.
+
+## Master tool (one entrypoint)
+Instead of remembering each script, call the dispatcher:
+`python .claude/skills/triz-innovation/scripts/triz.py <command> [args]`.
+Commands: `route "<text>"` · `matrix <imp> <wor>` (or `matrix --list`) ·
+`sufield --state <state>` · `ariz "<title>"` · `evolution --signals "..."` ·
+`case "<title>"` · `evaluate <csv>` · `master` (show the `TRIZ-MASTER.md`
+knowledge base). Run with no args for the full list. Works from any directory,
+so Claude Code or Codex can invoke it whenever a TRIZ capability is needed.
