@@ -132,6 +132,21 @@ When the main pipeline stalls — the contradiction is stubborn, the system feel
 
 The pipeline is designed to be run in order and in full. Skipping stages produces shallow solutions; the discipline of completing each stage before moving on is what separates TRIZ from brainstorming.
 
+### Operating rules (from SKILL.md)
+
+These rules govern how the skill executes the pipeline. They are the behavioral contract for any TRIZ session:
+
+1. **Run the pipeline in order** (stages 1–10 above). Do not skip a stage; if a stage has no content, say so explicitly and move on.
+2. **One question at a time, max 3 total.** Ask only when an answer would change the analysis. Otherwise state an assumption and proceed.
+3. **Be concrete.** No generic advice ("communicate better"). Every output must name components, parameters, resources, or steps.
+4. **Cite the method.** When you propose a solution, tag which TRIZ method produced it (e.g. `[Trimming Rule B]`, `[Separation in time]`, `[IP-15 Dynamics]`).
+5. **Load references on demand.** Read the matching file in `references/` only when a stage needs depth. Do not dump references into the answer.
+6. **End with a test, always.** No analysis is complete without stage 10.
+
+### Saving a case
+
+Persist the analysis as a reusable case file: `python .claude/skills/triz-innovation/scripts/triz_case_template.py "Short problem title"` creates a pre-filled markdown file in `cases/`. Fill it as you run the pipeline.
+
 ---
 
 ## 3. Function analysis
@@ -673,6 +688,56 @@ The same move maps across domains: "use an environmental field for free" → sof
 
 **Example:** A clinic needs to reduce patient no-shows. FOS: generalize to "ensure a person arrives at a specific time." Leading industries: airlines (check-in reminders), restaurants (reservation confirmations), dentists (appointment cards). Adapt: the airline model of escalating reminders (72h, 24h, 2h before) plus a "check in now" button. Tag: `[FOS: airline check-in → appointment reminders]`.
 
+### Method selection decision table
+
+When you don't know which TRIZ tool to use, match the problem signature to the row and run those methods. Most real problems need **2–4** methods, not one. This table is the engine behind `triz_router.py`.
+
+| If the problem looks like… | Start with | Then |
+|---|---|---|
+| "Improving A makes B worse" (a trade-off) | Engineering Contradiction + 40 IP | Physical Contradiction if it reduces to one element |
+| "It must be X and also not-X" (same thing, opposite needs) | Physical Contradiction + Separation | Resource Analysis |
+| "Too many parts / too costly / too complex" | Trimming | Function Analysis first, then Ideality |
+| "Why does this keep happening?" / recurring failure | Root Cause Analysis | Contradiction at the root cause |
+| "What even is going on here?" / unclear system | Function Analysis | System Operator |
+| "We lack budget / people / data" | Resource Analysis | Ideality |
+| "Reinvent / leapfrog this whole thing" | Ideal Final Result | System Operator + Function-Oriented Search |
+| "Someone, somewhere already solved this" | Function-Oriented Search | 76 Standard Solutions |
+| "Two things interact badly" (weak/harmful/missing action) | Su-Field + 76 Standard Solutions | Standard-solution class for the state |
+| "Where is this headed / how to leapfrog this whole class" | Evolution Trends + S-curve | System Operator (future column) |
+| "I have the action but no mechanism" | Scientific Effects | Resource Analysis |
+| "Tried the quick tools, still stuck on a hard contradiction" | ARIZ (escalation) | Physical Contradiction + Su-Field + Resources |
+| "Stuck, need a perspective shift" | Smart Little People | System Operator |
+| Business / org / pricing / market | Business TRIZ | Contradiction + Resource + Ideality |
+| Software / architecture / performance | Software TRIZ | Contradiction + Trimming |
+| Physio / rehab / clinic / adherence | Rehabilitation TRIZ | Physical Contradiction + Resource + Ideality |
+
+### Default fallback
+
+If the problem signature is unclear, run: **Function Analysis → Root Cause → Contradiction → Resource → IFR**. That sequence works on almost anything.
+
+### Router heuristics (keyword → method)
+
+These are the keyword/intent cues used by `triz_router.py` to recommend methods. They are signals, not rules — a problem can hit several.
+
+- **Engineering Contradiction:** "but", "trade-off", "at the cost of", "however", "increases … decreases", "more X means less Y".
+- **Physical Contradiction:** "must be both", "present and absent", "fast and slow", "big and small", "on and off", "hot and cold".
+- **Trimming:** "too many", "too complex", "expensive", "remove", "simplify", "redundant", "overhead", "bloated".
+- **Root Cause Analysis:** "keeps happening", "recurring", "again", "fails", "root", "why", "intermittent".
+- **Resource Analysis:** "no budget", "limited", "can't afford", "without adding", "scarce", "few people".
+- **Ideality / IFR:** "ideal", "leapfrog", "rethink", "from scratch", "best possible".
+- **Function Analysis:** "unclear", "complex system", "many parts", "interactions", "how it works".
+- **System Operator:** "future", "evolve", "long term", "context", "bigger picture".
+- **Su-Field + 76 Standard Solutions:** "interaction", "interferes", "doesn't act on", "damages", "weak effect", "too strong", "harmful", "contact", "between", "connect".
+- **Evolution Trends + S-curve:** "leapfrog", "next generation", "where is this going", "mature", "plateau", "diminishing returns", "reinvent the category", "obsolete".
+- **Scientific Effects:** "how do I", "mechanism", "without a", "is there a way to", "what effect", "achieve X without".
+- **ARIZ:** "still stuck", "tried everything", "hard problem", "nothing works", "very hard contradiction", "deep dive".
+- **Smart Little People:** "stuck", "no idea", "creative block".
+- **Business TRIZ:** "pricing", "customer", "market", "revenue", "team", "process", "org", "workflow".
+- **Software TRIZ:** "app", "code", "latency", "API", "database", "deploy", "architecture", "bug", "notification".
+- **Rehabilitation TRIZ:** "patient", "exercise", "therapy", "rehab", "adherence", "clinic", "physio".
+- **FOS:** "someone must have solved", "how do others", "is there a field that".
+- **MOS:** "we have a technology", "where can we apply", "find problems for".
+
 **Derives →** `references/triz-method-map.md`
 
 ---
@@ -739,6 +804,14 @@ Key router keywords (used by `triz_router.py`): FOS — "someone must have solve
 
 Numerator = value delivered to customer + revenue. Denominator = cost to serve + risk + org complexity. Bias every move toward **self-service** and **using existing assets** — that's where margin and durability come from.
 
+### Pricing playbook (mini)
+
+1. **Function-analyze the offer:** what useful function does the customer actually pay for? Grade it N/I/E.
+2. **Find the contradiction** — usually price↔adoption or simplicity↔revenue.
+3. **Resolve by separation:** tiers (condition), trials (time), bundle/unbundle (parts↔whole), usage-based (dynamics).
+4. **IFR check:** the customer gets the value *and pays in proportion to value received*, with no friction.
+5. **Score variants** on impact/feasibility/risk/reversibility; pick the smallest reversible price test.
+
 **Example:** A SaaS company wants to raise prices but fears churn. Contradiction: price vs volume. Separation on condition: segment by usage — heavy users pay more (value-based), light users keep a low tier. Separation on time: grandfather existing customers at current rates; new customers get new pricing. Separation by parts/whole: unbundle premium features into add-ons. Test the smallest reversible move first (e.g., a single add-on for new customers only).
 
 **Derives →** `references/business-triz.md`
@@ -788,6 +861,10 @@ Numerator = value delivered to customer + revenue. Denominator = cost to serve +
 
 The function executes with **zero added latency, zero new service, zero maintenance** — i.e., it's already handled by data/compute you have. Push designs toward fewer moving parts; every new service is denominator weight.
 
+### Test/experiment rollout guidance
+
+Software changes are cheap to make reversible: **feature flags, canary deployments, shadow traffic, A/B testing**. The stage-10 experiment should almost always be a **flagged, metric-gated rollout** with an explicit success threshold and a **rollback trigger**. Never ship a software TRIZ solution without a way to instantly revert it. Pattern: *"Enable for 5% of users behind flag F, measure metric M for 7 days, success if M improves by ≥10% with no degradation in error rate. Roll back if error rate exceeds 0.1%."*
+
 **Example:** A mobile app's notification system causes uninstalls (annoyance) while being the primary driver of retention. Physical contradiction: notifications must be present and absent. Separation in time: fire only during the user's historically active hours. Separation on condition: suppress when the user has already engaged today. Self-service: let users set their own notification budget ("nudge me at most 2× per day"). Tag: `[Separation in time + condition]`, `[IP-25 Self-service]`.
 
 **Derives →** `references/software-triz.md`
@@ -833,6 +910,10 @@ The patient's **own motivation, goals, identity, social ties, and daily routine*
 ### IFR for rehab
 
 Recovery happens **as a by-product of the patient's normal life**, with minimal clinic burden and minimal nagging. Score solutions on impact (recovery), feasibility (clinically safe + doable at home), and ideality (low burden, self-sustaining). Always end with a measurable experiment: a metric (adherence %, ROM, pain NRS, function score), a window, and a success threshold.
+
+### Clinic/practice organization workflow
+
+Treat the practice as a system: **function-analyze the patient journey** end-to-end — booking → intake → assessment → treatment → home program → follow-up. Find harmful, insufficient, and redundant steps; trim and resequence. Resource-analyze idle time (waiting room, between-session gaps) for education, self-assessment, or intake that can happen before the patient arrives. Common wins: combine intake + assessment into one step [IP-5 Merging]; let patients self-intake before arrival via a digital form [IP-25 Self-service]; trim non-value steps the clinician repeats each visit (Rule A/C); use the gap between sessions for automated check-ins (temporal resource). The IFR direction: the patient arrives pre-assessed, the clinician spends the whole visit on treatment, and the home program is already tied to the patient's daily routine before they leave.
 
 **Example:** Post-surgical knee rehab — adherence drops at week 3. Function analysis: the exercise sheet (tool) instructs (action) the patient (object) — U, but Insufficient (patient forgets or loses motivation). Harmful: the clinician spends 15 min per visit re-explaining exercises. Root cause: the home program is disconnected from daily life. Resources: the patient walks to the kitchen every morning; the stairs are a built-in exercise surface. Solution: replace 2 of 5 sheet exercises with kitchen-counter and stair-based equivalents — the patient's environment becomes the tool (Trimming Rule B: the object does it itself). Tag: `[Trimming Rule B]`, `[Resource: daily routine]`.
 
