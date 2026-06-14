@@ -101,13 +101,8 @@ def dispatch(argv: list) -> int:
         The exit code of the invoked sub-tool (0 on success).
     """
     if not argv or argv[0] in ("help", "--help", "-h", "list", "--list"):
-        # note: a bare "matrix --list" is handled below; this branch is only the
-        # top-level help when --list is the very first/only argument.
-        if argv and argv[0] == "--list" and len(argv) > 1:
-            pass
-        else:
-            _print_usage()
-            return 0
+        _print_usage()
+        return 0
 
     command = argv[0].lower()
     command = _ALIASES.get(command, command)

@@ -17,7 +17,8 @@ import sys
 from typing import Any
 
 # ── S-curve stage cue table ────────────────────────────────────────────────────
-# Ordered most-specific-first to avoid weaker cues swallowing stronger ones.
+# Ordered from latest to earliest so higher-numbered stages get precedence
+# when tie-breaking among mixed signals.
 # Each entry: (stage int, stage name, tuple of lowercase cue substrings).
 # No match → stage 0 / Unknown.
 
@@ -166,17 +167,32 @@ def analyze(signals: str = "") -> dict[str, Any]:
     why = "No signals provided or no cues matched."
 
     if lower:
+        # Collect all matching cues, grouped by stage
+        matches_by_stage: dict[int, dict[str, Any]] = {}
         for stage_val, stage_name, cues in _STAGE_CUES:
-            for cue in cues:
-                if cue in lower:
-                    stage = stage_val
-                    name = stage_name
-                    why = f"Detected cue: \"{cue}\" in signals."
-                    break
-            if stage != 0:
-                break
+            matched = [cue for cue in cues if cue in lower]
+            if matched:
+                matches_by_stage.setdefault(stage_val, {
+                    "name": stage_name,
+                    "cues": [],
+                })["cues"].extend(matched)
 
-        if stage == 0:
+        if matches_by_stage:
+            # Pick stage with most matches; tie → later stage (higher number)
+            best_stage = max(matches_by_stage, key=lambda s: (len(matches_by_stage[s]["cues"]), s))
+            stage = best_stage
+            name = matches_by_stage[best_stage]["name"]
+
+            # Build "why" listing all cues, grouped by stage (sorted earliest→latest)
+            def _stage_label(sv: int) -> str:
+                return f"{matches_by_stage[sv]['name']} (stage {sv})"
+
+            groups = [
+                f"{_stage_label(sv)}: {', '.join(matches_by_stage[sv]['cues'])}"
+                for sv in sorted(matches_by_stage)
+            ]
+            why = "Matched cues — " + "; ".join(groups)
+        else:
             why = "No recognised S-curve cues matched the provided signals."
 
     note: str | None = None

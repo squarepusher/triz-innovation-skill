@@ -9,7 +9,7 @@ Usage:
     python triz_evaluator.py --help          # print CSV format
 
 CSV header (exact):
-    solution,impact,feasibility,cost,speed,risk,reversibility,complexity,ideality
+    solution,impact,feasibility,affordability,speed,safety,reversibility,simplicity,ideality
 
 Standard library only — Python 3.8+.
 """
@@ -22,11 +22,11 @@ from typing import Any
 CRITERIA = [
     "impact",
     "feasibility",
-    "cost",
+    "affordability",
     "speed",
-    "risk",
+    "safety",
     "reversibility",
-    "complexity",
+    "simplicity",
     "ideality",
 ]
 
@@ -35,44 +35,44 @@ _SAMPLE_DATA: list[dict[str, Any]] = [
         "solution": "Phone-based exercise reminders with gamification",
         "impact": 4,
         "feasibility": 3,
-        "cost": 2,
+        "affordability": 2,
         "speed": 4,
-        "risk": 3,
+        "safety": 3,
         "reversibility": 5,
-        "complexity": 2,
+        "simplicity": 2,
         "ideality": 3,
     },
     {
         "solution": "Therapist-led weekly check-in calls",
         "impact": 5,
         "feasibility": 3,
-        "cost": 1,
+        "affordability": 1,
         "speed": 2,
-        "risk": 4,
+        "safety": 4,
         "reversibility": 4,
-        "complexity": 4,
+        "simplicity": 4,
         "ideality": 2,
     },
     {
         "solution": "Peer-support group chat with shared progress board",
         "impact": 3,
         "feasibility": 4,
-        "cost": 4,
+        "affordability": 4,
         "speed": 3,
-        "risk": 3,
+        "safety": 3,
         "reversibility": 5,
-        "complexity": 2,
+        "simplicity": 2,
         "ideality": 4,
     },
     {
         "solution": "AI-driven adaptive exercise plan with minimal notifications",
         "impact": 5,
         "feasibility": 2,
-        "cost": 2,
+        "affordability": 2,
         "speed": 3,
-        "risk": 2,
+        "safety": 2,
         "reversibility": 3,
-        "complexity": 1,
+        "simplicity": 1,
         "ideality": 4,
     },
 ]
@@ -82,8 +82,8 @@ def score(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Score a list of solution dicts.
 
     Each input row must have a "solution" key (str) plus the eight criteria
-    as ints 1–5: impact, feasibility, cost, speed, risk, reversibility,
-    complexity, ideality.
+    as ints 1–5: impact, feasibility, affordability, speed, safety, reversibility,
+    simplicity, ideality.
 
     Returns a new list of dicts with an added "total" key (sum of eight criteria),
     sorted by total descending.
@@ -101,12 +101,12 @@ def score(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def format_table(scored: list[dict[str, Any]]) -> str:
     """Format scored solutions as a monospaced markdown/ASCII table.
 
-    Columns: solution, impact, feasibility, cost, speed, risk, reversibility,
-             complexity, ideality, total.
+    Columns: solution, impact, feasibility, affordability, speed, safety,
+             reversibility, simplicity, ideality, total.
     """
     headers = [
-        "Solution", "Impact", "Feasibility", "Cost", "Speed",
-        "Risk", "Reversibility", "Complexity", "Ideality", "Total",
+        "Solution", "Impact", "Feasibility", "Affordability", "Speed",
+        "Safety", "Reversibility", "Simplicity", "Ideality", "Total",
     ]
     col_keys = ["solution"] + CRITERIA + ["total"]
 
@@ -191,12 +191,22 @@ def _print_help() -> None:
     print("TRIZ Evaluator — CSV format")
     print()
     print("CSV header (exact, case-insensitive):")
-    print("  solution,impact,feasibility,cost,speed,risk,reversibility,complexity,ideality")
+    print("  solution,impact,feasibility,affordability,speed,safety,reversibility,simplicity,ideality")
     print()
-    print("Each row: solution label + 8 integer scores (1 = worst, 5 = best).")
+    print("All eight criteria use a 1–5 scale where 5 = best, 1 = worst:")
+    print("  impact         — 5 = highest positive impact")
+    print("  feasibility    — 5 = most feasible to implement")
+    print("  affordability  — 5 = most affordable (lowest cost)")
+    print("  speed          — 5 = fastest to implement")
+    print("  safety         — 5 = safest (lowest risk)")
+    print("  reversibility  — 5 = easiest to reverse/roll back")
+    print("  simplicity     — 5 = simplest (lowest complexity)")
+    print("  ideality       — 5 = closest to ideal final result")
+    print()
+    print("Scoring: total = sum of all eight criteria (max 40).")
     print()
     print("Example CSV content:")
-    print("  solution,impact,feasibility,cost,speed,risk,reversibility,complexity,ideality")
+    print("  solution,impact,feasibility,affordability,speed,safety,reversibility,simplicity,ideality")
     print("  Gamified reminders,4,3,2,4,3,5,2,3")
     print("  Therapist calls,5,3,1,2,4,4,4,2")
 
@@ -217,9 +227,6 @@ def main() -> None:
 
     # Assume it's a CSV file path
     rows = _parse_csv(arg)
-    if len(rows) < 2:
-        print("Error: CSV must contain at least 2 data rows.", file=sys.stderr)
-        sys.exit(1)
 
     scored = score(rows)
     print(format_table(scored))

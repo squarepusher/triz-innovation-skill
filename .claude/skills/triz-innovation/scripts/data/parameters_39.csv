@@ -11,7 +11,7 @@ id,name
 10,Force (Intensity)
 11,Stress or pressure
 12,Shape
-13,Stability of the object composition
+13,Stability of the object's composition
 14,Strength
 15,Duration of action of moving object
 16,Duration of action of stationary object
@@ -28,13 +28,13 @@ id,name
 27,Reliability
 28,Measurement accuracy
 29,Manufacturing precision
-30,Object-affected harmful factor
-31,Object-generated harmful factor
+30,Object-affected harmful factors
+31,Object-generated harmful factors
 32,Ease of manufacture
 33,Ease of operation
 34,Ease of repair
-35,Adaptability or Versatility
+35,Adaptability or versatility
 36,Device complexity
-37,Difficulty of detection
+37,Difficulty of detecting and measuring
 38,Extent of automation
 39,Productivity

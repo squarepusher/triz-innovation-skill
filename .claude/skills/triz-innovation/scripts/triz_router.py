@@ -22,9 +22,9 @@ from typing import Any
 RULES: list[tuple[tuple[str, ...], str, int, str]] = [
     # -- Engineering Contradiction signals
     (
-        ("but ", " but ", "trade-off", "tradeoff", "at the cost of",
+        ("but ", " but ", "but", "but,", "but.", "trade-off", "tradeoff", "at the cost of",
          "however", "increases", "decreases", "more ", " less ",
-         "ma ", " ma ", "però", "tuttavia", "a scapito di", "aumenta",
+         "ma ", " ma ", "ma", "ma,", "ma.", "però", "tuttavia", "a scapito di", "aumenta",
          "diminuisce", "più ", " meno "),
         "Engineering Contradiction + 40 Inventive Principles",
         3, "contradiction cue detected (trade-off / conflict connector)"
@@ -95,6 +95,23 @@ RULES: list[tuple[tuple[str, ...], str, int, str]] = [
          "creative block", "blocco creativo", "non so come", "impasse"),
         "Smart Little People",
         1, "stuck / creative-block signal"
+    ),
+    # -- FOS (Function-Oriented Search) signals
+    (
+        ("someone must have solved", "how do others", "is there a field that",
+         "how do they", "has anyone solved", "cross-industry", "cross industry",
+         "other industries", "another field", "chi ha risolto", "come fanno",
+         "qualcuno ha già"),
+        "Function-Oriented Search (FOS)",
+        3, "cross-industry solution search cue"
+    ),
+    # -- MOS (Method-Oriented Search) signals
+    (
+        ("we have a technology", "where can we apply", "find problems for",
+         "new application", "apply this to", "abbiamo una tecnologia",
+         "dove possiamo applicare"),
+        "Method-Oriented Search (MOS)",
+        3, "technology-to-problem matching cue"
     ),
     # -- Business TRIZ signals
     (
