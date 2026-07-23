@@ -1,33 +1,29 @@
-I'll retrieve the repository structure and files to generate a comprehensive README.Let me explore the repository structure:Based on my review of the repository, I can now generate a comprehensive README. Here's a professionally structured README for this project:
-
-```markdown name=README.md url=https://github.com/Cappe6969/triz-innovation-skill
-
 # TRIZ Innovation Skill
 
-A comprehensive, systematic innovation methodology implemented as a skill framework for solving complex problems across engineering, software, business, and clinical domains.
+Системный подход к инновациям, реализованный как skill framework для решения сложных задач в инженерии, разработке ПО, бизнесе и клинических задачах.
 
-## What is TRIZ?
+## Что такое TRIZ?
 
-**TRIZ** (Teoriya Resheniya Izobretatelskikh Zadach — "Theory of Inventive Problem Solving") is a systematic innovation methodology developed by Genrich Altshuller and colleagues beginning in 1946. Rather than relying on random brainstorming or intuition, TRIZ provides repeatable, structured processes for solving technical contradictions and generating novel solutions.
+**TRIZ** (Теория решения изобретательских задач) — это системная методика инноваций, разработанная Генрихом Альтшуллером и коллегами начиная с 1946 года. Вместо случайного брейншторминга или опоры на интуицию TRIZ предлагает повторяемые, структурированные способы решения технических противоречий и поиска новых решений.
 
-### Core principles
+### Основные принципы
 
-- **Problems and solutions repeat across industries.** The same fundamental contradiction appears in mechanical engineering, software, business, and healthcare.
-- **Innovation patterns are discoverable.** Altshuller extracted 40 recurring solution patterns from hundreds of thousands of patents — the "grammar" of invention.
-- **Method over inspiration.** Replace "have a bright idea" with a disciplined, reusable process: model the problem → map to standardized parameters → look up validated solution patterns → apply them concretely.
+- **Проблемы и решения повторяются в разных отраслях.** Одна и та же базовая противоречивая ситуация встречается в машиностроении, ПО, бизнесе и здравоохранении.
+- **Паттерны инноваций можно выявить.** Альтшуллер выделил 40 повторяющихся принципов решения из сотен тысяч патентов — своего рода «грамматику» изобретательства.
+- **Важен метод, а не вдохновение.** Вместо подхода «нужна гениальная идея» используется дисциплинированный, повторяемый процесс: описать проблему → сопоставить с параметрами → найти подходящие паттерны решений → применить их на практике.
 
-## Repository structure
+## Структура репозитория
 
-```
+```text
 triz-innovation-skill/
-├── TRIZ-MASTER.md                    Master knowledge base; canonical source for all methods
-├── SPEC.md                           Build specification (work-in-progress tracking)
-├── BACKLOG.md                        Deferred findings and known issues
-├── CLAUDE.md                         Architect workflow and collaboration rules
+├── TRIZ-MASTER.md                    Основная база знаний; канонический источник всех методов
+├── SPEC.md                           Спецификация разработки (отслеживание задач)
+├── BACKLOG.md                        Отложенные находки и известные проблемы
+├── CLAUDE.md                         Правила работы и взаимодействия
 │
-├── .claude/skills/triz-innovation/   Reference implementation (skill files)
-│   ├── SKILL.md                      10-stage problem-solving pipeline
-│   ├── references/                   18 method reference files (each a standalone tool)
+├── .claude/skills/triz-innovation/   Базовая реализация skill (файлы навыка)
+│   ├── SKILL.md                      10-этапный конвейер решения задач
+│   ├── references/                   18 справочных файлов по методам (каждый — отдельный инструмент)
 │   │   ├── function-analysis.md
 │   │   ├── root-cause-analysis.md
 │   │   ├── contradiction-analysis.md
@@ -45,150 +41,137 @@ triz-innovation-skill/
 │   │   ├── business-triz.md
 │   │   ├── software-triz.md
 │   │   └── rehabilitation-triz.md
-│   └── scripts/                      Automation & lookup tools (Python)
-│       ├── triz_router.py            Recommend TRIZ methods from problem description
-│       ├── triz_matrix.py            Contradiction matrix lookup (39 parameters)
-│       ├── triz_standard_solutions.py Su-Field diagnosis → standard solutions
-│       ├── triz_ariz.py              ARIZ-85C worksheet generator
-│       ├── triz_evolution.py         S-curve stage classification
-│       ├── triz_case_template.py     Case file template for analysis persistence
-│       ├── triz_evaluator.py         Solution scoring & ranking
-│       └── data/                     CSV reference data
+│   └── scripts/                      Автоматизация и инструменты поиска (Python)
+│       ├── triz_router.py            Подбор методов TRIZ по описанию проблемы
+│       ├── triz_matrix.py            Поиск по матрице противоречий (39 параметров)
+│       ├── triz_standard_solutions.py Su-Field диагностика → стандартные решения
+│       ├── triz_ariz.py              Генератор рабочего листа ARIZ-85C
+│       ├── triz_evolution.py         Классификация стадии S-кривой
+│       ├── triz_case_template.py     Шаблон кейса для сохранения анализа
+│       ├── triz_evaluator.py         Оценка и ранжирование решений
+│       └── data/                     CSV-данные для справочника
 │           ├── parameters_39.csv
 │           └── inventive_principles.csv
 │
-├── cases/                            Case studies & worked examples
-├── docs/                             Documentation & theory notes
-├── tests/                            Test suite (test coverage)
+├── cases/                            Кейсы и разобранные примеры
+├── docs/                             Документация и теоретические заметки
+├── tests/                            Набор тестов
 │
-└── triz-prompt-engineering-main/     MIT-licensed TRIZ prompt library
+└── triz-prompt-engineering-main/     MIT-лицензированная библиотека TRIZ prompts
     └── (source for enrichment & cross-reference)
-```
 
-## Quick start
+Быстрый старт
 
-### 1. Understanding the framework
+1. Разберитесь с основой
 
-Start with **`TRIZ-MASTER.md`** — the canonical knowledge base organized into 24 sections:
+Начните с TRIZ-MASTER.md — это основная база знаний, структурированная в 24 раздела:
 
-- **Sections 0–2:** Orientation (how to use this, foundations, the 10-stage pipeline)
-- **Sections 3–20:** 18 TRIZ methods (function analysis, root cause, contradictions, trimming, ARIZ, evolution trends, business/software/clinical adaptations, etc.)
-- **Sections 21–23:** Tooling, derivation map, and sources
+- Разделы 0–2: Введение (как этим пользоваться, основы, 10-этапный pipeline)
+- Разделы 3–20: 18 методов TRIZ (функциональный анализ, анализ корневых причин, противоречия, trimming, ARIZ, тренды развития, бизнес-/software-/clinical-адаптации и т. д.)
+- Разделы 21–23: Инструменты, карта вывода методов и источники
 
-### 2. Running a TRIZ analysis
+2. Проведите анализ по TRIZ
 
-Follow the **10-stage problem-solving pipeline** (from `SKILL.md`):
+Следуйте 10-этапному pipeline (из SKILL.md):
 
-1. **Problem framing** — Restate neutrally; name system, stakeholders, constraints.
-2. **Function analysis** — Model as Tool → Action → Object; grade each function U/H, N/I/E.
-3. **Root cause analysis** — Chain symptom → root; classify causes; find leverage points.
-4. **Contradiction analysis** — State engineering contradictions; map to 39 parameters; use the matrix.
-5. **Resource analysis** — Inventory internal, external, free, temporal, spatial, human, digital resources.
-6. **Ideal Final Result** — Define the north star: perfect function, zero cost/harm/complexity.
-7. **Method selection** — Pick 2–5 TRIZ methods that fit the problem signature (use `triz_router.py`).
-8. **Solution generation** — Produce 3 conservative, 3 creative, 3 non-obvious, 2 high-risk, 1 testable-this-week.
-9. **Evaluation** — Score each solution on impact, feasibility, cost, speed, risk, reversibility, complexity, ideality.
-10. **Experiment plan** — Name the best candidate, first experiment, success/failure criterion, next steps.
+1. Постановка проблемы — Переформулируйте нейтрально; укажите систему, заинтересованные стороны, ограничения.
+2. Функциональный анализ — Опишите как Tool → Action → Object; оцените каждую функцию U/H, N/I/E.
+3. Анализ корневой причины — Постройте цепочку симптом → причина; классифицируйте причины; найдите точки воздействия.
+4. Анализ противоречий — Сформулируйте инженерные противоречия; сопоставьте с 39 параметрами; используйте матрицу.
+5. Анализ ресурсов — Определите внутренние, внешние, бесплатные, временные, пространственные, человеческие и цифровые ресурсы.
+6. Идеальный конечный результат — Сформулируйте целевое состояние: идеальная функция, нулевая стоимость/вред/сложность.
+7. Выбор метода — Подберите 2–5 методов TRIZ, подходящих под тип проблемы (используйте triz_router.py).
+8. Генерация решений — Предложите 3 консервативных, 3 творческих, 3 неочевидных, 2 рискованных, 1 решение, которое можно протестировать на этой неделе.
+9. Оценка — Оцените каждое решение по влиянию, реализуемости, стоимости, скорости, риску, обратимости, сложности и идеальности.
+10. План эксперимента — Выберите лучший вариант, первый эксперимент, критерий успеха/неудачи и следующие шаги.
 
-### 3. Use the helper scripts
+3. Используйте вспомогательные скрипты
 
-```bash
-# Recommend methods for a problem
+# Подобрать методы для проблемы
 python .claude/skills/triz-innovation/scripts/triz_router.py "too many features makes the product complex"
 
-# Look up a contradiction (improving parameter X, worsening Y)
+# Посмотреть противоречие (улучшение параметра X, ухудшение Y)
 python .claude/skills/triz-innovation/scripts/triz_matrix.py 14 2
 # Output: inventive principles to try
 
 # Su-Field diagnosis → standard solutions
 python .claude/skills/triz-innovation/scripts/triz_standard_solutions.py harmful
 
-# Generate an ARIZ-85C worksheet
+# Сгенерировать рабочий лист ARIZ-85C
 python .claude/skills/triz-innovation/scripts/triz_ariz.py "system locks up under concurrent load"
 
-# Evaluate candidate solutions
+# Оценить варианты решений
 python .claude/skills/triz-innovation/scripts/triz_evaluator.py solutions.csv
 
-# Create a persistent case file
+# Создать постоянный файл кейса
 python .claude/skills/triz-innovation/scripts/triz_case_template.py "reminder app adherence problem"
-```
 
-## Key methods at a glance
+Ключевые методы кратко
 
-| Method | Problem signature | Output |
-|--------|-------------------|--------|
-| **Function Analysis** | "What even is going on?" | Function table; trimming candidates |
-| **Root Cause Analysis** | "Why does this keep happening?" | Cause-effect chain; leverage points |
-| **Contradiction Matrix** | "Improving A makes B worse" | 40 inventive principles (shortlist) |
-| **Physical Contradictions** | "It must be X and also not-X" | 4 separation principles (time/space/condition/scale) |
-| **Resource Analysis** | "We don't have budget / people" | Inventory of free, underused resources |
-| **Ideal Final Result** | "Reinvent this whole thing" | North-star vision; work-backward moves |
-| **Trimming** | "Too many parts / costly / complex" | Delete component, keep function via Rule A/B/C |
-| **System Operator (9 Windows)** | "Problem feels stuck; need perspective shift" | 9-cell grid (sub/system/super × past/present/future) |
-| **Su-Field + 76 Standard Solutions** | "Two things interact badly" | Standard-solution class; candidate mechanisms |
-| **ARIZ-85C** | "Hard contradiction won't yield; need heavy artillery" | 9-part reformulation algorithm; solution concept |
-| **Evolution Trends & S-curve** | "Where is this headed / leapfrog opportunity" | S-curve stage; 8 evolution trends + next moves |
-| **Scientific Effects** | "I know the action but not the mechanism" | Function → physical/chemical effects catalog |
-| **Business TRIZ** | Business, pricing, org, workflow problems | Same TRIZ machinery; business vocabulary |
-| **Software TRIZ** | Architecture, performance, UX, reliability | Recurring software contradictions + IP shortcuts |
-| **Rehabilitation TRIZ** | Patient adherence, therapy design, clinic workflow | Behavioral resources; clinical guardrails |
+Метод	Тип проблемы	Результат
+Function Analysis	"Что вообще здесь происходит?"	Таблица функций; кандидаты на trimming
+Root Cause Analysis	"Почему это продолжает происходить?"	Цепочка причина-следствие; точки воздействия
+Contradiction Matrix	"Улучшение A ухудшает B"	40 inventive principles (shortlist)
+Physical Contradictions	"Это должно быть X и одновременно не-X"	4 принципа разделения (время/пространство/условие/масштаб)
+Resource Analysis	"Нет бюджета / людей"	Список свободных и недоиспользованных ресурсов
+Ideal Final Result	"Полностью переделать систему"	Видение целевого состояния; шаги от цели назад
+Trimming	"Слишком много частей / дорого / сложно"	Удаление компонента с сохранением функции через Rule A/B/C
+System Operator (9 Windows)	"Проблема застыла; нужен новый угол зрения"	Сетка 9 клеток (sub/system/super × past/present/future)
+Su-Field + 76 Standard Solutions	"Две вещи плохо взаимодействуют"	Класс стандартного решения; возможные механизмы
+ARIZ-85C	"Сложное противоречие не поддаётся; нужен тяжёлый инструмент"	9-частный алгоритм переформулирования; концепция решения
+Evolution Trends & S-curve	"Куда это движется / где скачок"	Стадия S-кривой; 8 трендов развития + следующие шаги
+Scientific Effects	"Я знаю действие, но не знаю механизм"	Каталог эффектов для функции → физического/химического эффекта
+Business TRIZ	Проблемы бизнеса, цены, оргструктуры, процессов	Те же инструменты TRIZ; бизнес-лексика
+Software TRIZ	Архитектура, производительность, UX, надёжность	Повторяющиеся противоречия в ПО + сокращения через IP
+Rehabilitation TRIZ	Приверженность лечению, дизайн терапии, клинические процессы	Поведенческие ресурсы; клинические ограничения
 
-## Language & framework
+Язык и фреймворк
 
-- **Primary language:** Python (scripts)
-- **Documentation:** Markdown (skill files, master knowledge base)
-- **Runtime:** No external dependencies required for the core framework; scripts use only Python stdlib
-- **Skill integration:** Compatible with Claude Artifact skills and custom integrators via the reference framework
+- Основной язык: Python (скрипты)
+- Документация: Markdown (файлы навыка, основная база знаний)
+- Среда выполнения: Для ядра фреймворка внешние зависимости не нужны; скрипты используют только стандартную библиотеку Python
+- Интеграция: Совместимо с Claude Artifact skills и кастомными интеграциями через reference framework
 
-## How it fits together
+Как это связано между собой
 
-**TRIZ-MASTER.md** is the textbook — a single, coherent 900+ line reference document that consolidates:
+TRIZ-MASTER.md — это учебник: единый связный документ на 900+ строк, который объединяет:
 
-1. **18 original reference files** from `.claude/skills/triz-innovation/references/` (already clean operational synthesis).
-2. **Secondary enrichment** from the MIT-licensed `triz-prompt-engineering-main/` repo (extended checklists, examples).
-3. **Original operational prose** — not transcription; every section includes procedure, example, and derivation back to source.
+1. 18 исходных reference-файлов из .claude/skills/triz-innovation/references/ (уже приведены к единому рабочему виду).
+2. Вторичное обогащение из репозитория triz-prompt-engineering-main/ с MIT-лицензией (расширенные чек-листы, примеры).
+3. Оригинальный рабочий текст — не дословная перепечатка; в каждом разделе есть процедура, пример и привязка к источнику.
 
-The **skill files** in `.claude/skills/triz-innovation/` are the working implementation — each reference a standalone quick card for one method. The **scripts** automate lookups (matrix, router, evaluator) and worksheet generation.
+Skill-файлы в .claude/skills/triz-innovation/ — это рабочая реализация: каждый reference-файл как отдельная краткая карточка по одному методу. Скрипты автоматизируют поиск (matrix, router, evaluator) и генерацию рабочих листов.
 
-**Cases** persist worked examples so solutions are reusable. **Tests** verify script correctness.
+Cases сохраняют разобранные примеры, чтобы решения можно было переиспользовать. Tests проверяют корректность скриптов.
 
-## Try asking
+Примеры запросов
 
-- **"How do I resolve a trade-off where improving speed reduces reliability?"** → See **Contradiction Analysis** (section 5) and **The 40 Inventive Principles** (section 6).
-- **"Our product has too many features and is getting hard to maintain. How do we simplify?"** → **Trimming** (section 10) with **Function Analysis** (section 3) as the prerequisite.
-- **"A startup is stuck between personalization (hard to scale) and scale (hard to personalize). How do we leapfrog?"** → **Physical Contradictions** (section 7, separation on condition) + **Business TRIZ** (section 18).
-- **"I have a problem that resists the quick TRIZ tools. What's the heavy-duty approach?"** → **ARIZ-85C** (section 13) — the master algorithm.
-- **"Where is an entire industry headed? How do we get ahead of the curve?"** → **Evolution Trends & S-curve** (section 14).
+- "Как решить компромисс, где улучшение скорости снижает надёжность?" → см. Contradiction Analysis (раздел 5) и The 40 Inventive Principles (раздел 6).
+- "В продукте слишком много функций, и его уже трудно поддерживать. Как упростить?" → Trimming (раздел 10) с Function Analysis (раздел 3) как предварительным шагом.
+- "Стартап застрял между персонализацией (трудно масштабировать) и масштабированием (трудно персонализировать). Как найти скачок?" → Physical Contradictions (раздел 7, разделение по условию) + Business TRIZ (раздел 18).
+- "Есть проблема, которая не поддаётся быстрым TRIZ-инструментам. Что делать в тяжёлом случае?" → ARIZ-85C (раздел 13) — основной алгоритм.
+- "Куда движется отрасль? Как опередить рынок?" → Evolution Trends & S-curve (раздел 14).
 
-## Status
+Статус
 
-- **Core content:** Complete (TRIZ-MASTER.md, 18 reference files, 10-stage pipeline, 7 helper scripts).
-- **Coverage:** 24 major sections, 40 inventive principles, 39 engineering parameters, 76 standard solutions, 4 separation principles, 8 evolution trends, 9 ARIZ parts.
-- **Known issues:** See `BACKLOG.md` for deferred findings (Books/ licensing, router keyword edge cases, TRIZ-MASTER.md refinements).
+- Основное содержимое: Готово (TRIZ-MASTER.md, 18 reference-файлов, 10-этапный pipeline, 7 вспомогательных скриптов).
+- Покрытие: 24 крупных раздела, 40 inventive principles, 39 engineering parameters, 76 standard solutions, 4 separation principles, 8 evolution trends, 9 частей ARIZ.
+- Известные проблемы: См. BACKLOG.md для отложенных находок (Books/licensing, edge cases ключевых слов router, доработки TRIZ-MASTER.md).
 
-## License
+Лицензия
 
-- **TRIZ-MASTER.md & reference files:** Original operational synthesis. No long verbatim passages copied from copyrighted sources.
-- **`triz-prompt-engineering-main/`:** MIT Licensed (secondary enrichment source).
-- **Repository:** Available under the stated terms of this project.
+- TRIZ-MASTER.md и reference-файлы: Оригинальная рабочая компоновка. Нет длинных дословных фрагментов из защищённых источников.
+- triz-prompt-engineering-main/: MIT Licensed (источник вторичного обогащения).
+- Репозиторий: Доступен на указанных условиях проекта.
 
-## Further reading
+Дополнительное чтение
 
-- **SPEC.md** — Build requirements and acceptance criteria.
-- **CLAUDE.md** — Architect workflow (how to file changes and improvements).
-- **BACKLOG.md** — Known issues and deferred work.
-- **`.claude/skills/triz-innovation/references/`** — 18 deep-dive method files (one method per file).
+- SPEC.md — требования к сборке и критерии приёмки.
+- CLAUDE.md — правила работы (как вносить изменения и улучшения).
+- BACKLOG.md — известные проблемы и отложенные задачи.
+- .claude/skills/triz-innovation/references/ — 18 файлов с углублённым разбором методов (один метод на файл).
 
----
 
-**Last updated:** June 2026  
-**Repository:** https://github.com/Cappe6969/triz-innovation-skill
-```
+Last updated: June 2026
+Repository: https://github.com/Cappe6969/triz-innovation-skill
 
-This README provides:
-- **What it is:** Clear positioning as a systematic innovation framework.
-- **How to start:** Quick-start guide, 10-stage pipeline, script examples.
-- **Structure:** Annotated directory tree showing the relationship between TRIZ-MASTER.md, references, scripts, and skill files.
-- **Key methods table:** Fast lookup for matching problems to methods.
-- **Integration notes:** How the pieces fit together conceptually.
-- **Try asking:** Concrete example questions that surface the framework's power.
